@@ -44,18 +44,13 @@ void read_adc()     //unsigned int *data
       writeAddrInit = true;
     }
    
-    Wire.requestFrom(ADDR_ADC121, 2);           // request 2byte from device
-    avail = Wire.available();
-    Serial.println(avail);
-    if(avail<=2)
-    {
-      getData = (Wire.read()&0x0f)<<8;
-      getData |= Wire.read();
-      times[index] = micros();
-      index++;
-      if (index >= LOG_SIZE){
-        index = 0;
-      }
+    Wire.requestFrom(ADDR_ADC121, 2, false);           // request 2byte from device
+    getData = (Wire.read()&0x0f)<<8;
+    getData |= Wire.read();
+    times[index] = micros();
+    index++;
+    if (index >= LOG_SIZE){
+      index = 0;
     }
     //Serial.print("getData:");
     //Serial.println(getData);
@@ -65,7 +60,7 @@ void setup()
   Serial.begin(115200);
   Wire.begin();
   Serial.println("Begin");
-  TWBR = ((CPU_FREQ / TWI_FREQ) - 16) / 2;
+  //TWBR = ((CPU_FREQ / TWI_FREQ) - 16) / 2;
   Serial.println("Init");
   init_adc();
 }
