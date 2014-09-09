@@ -60,7 +60,7 @@ void setup()
   Serial.begin(115200);
   Wire.begin();
   Serial.println("Begin");
-  //TWBR = ((CPU_FREQ / TWI_FREQ) - 16) / 2;
+  TWBR = ((CPU_FREQ / TWI_FREQ) - 16) / 2;
   Serial.println("Init");
   init_adc();
 }
